@@ -33,6 +33,9 @@ error_handler(const char *msg, const pkgconf_client_t *client, void *data)
 	(void) data;
 	pkgconf_cli_state_t *state = client->client_data;
 
+	if (state->error_msgout == NULL)
+		return true;
+
 	fprintf(state->error_msgout, "%s", msg);
 	return true;
 }
