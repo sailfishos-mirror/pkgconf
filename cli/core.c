@@ -735,10 +735,10 @@ print_fragment_tree_branch(pkgconf_output_t *output, pkgconf_list_t *fragment_li
 
 		if (frag->type)
 			pkgconf_output_fmt(output, PKGCONF_OUTPUT_STDOUT,
-				"%*s'-%c%s' [type %c]\n", indent, "", frag->type, frag->data, frag->type);
+				"%*s'-%c%s' [type %c, %zu children]\n", indent, "", frag->type, frag->data, frag->type, frag->children.length);
 		else
 			pkgconf_output_fmt(output, PKGCONF_OUTPUT_STDOUT,
-				"%*s'%s' [untyped]\n", indent, "", frag->data);
+				"%*s'%s' [untyped, %zu children]\n", indent, "", frag->data, frag->children.length);
 
 		print_fragment_tree_branch(output, &frag->children, indent + 2);
 	}
