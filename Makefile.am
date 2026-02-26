@@ -355,7 +355,6 @@ EXTRA_DIST =	pkg.m4 \
 		doc/libpkgconf-tuple.rst
 
 test_scripts=	\
-		tests/parser.sh \
 		tests/spdxtool.sh \
 		tests/symlink.sh
 

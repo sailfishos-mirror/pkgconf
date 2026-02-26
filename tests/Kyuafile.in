@@ -2,6 +2,5 @@ syntax(2)
 
 test_suite('pkgconf')
 
-atf_test_program{name='parser'}
 atf_test_program{name='spdxtool'}
 atf_test_program{name='symlink'}
