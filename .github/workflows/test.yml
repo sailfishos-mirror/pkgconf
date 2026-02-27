@@ -5,6 +5,23 @@ on:
   pull_request:
 
 jobs:
+  msvc:
+    runs-on: windows-2025-vs2026
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Meson
+        run: pip install meson
+
+      - name: Build
+        run: |
+          meson _build --vsenv
+          meson compile -C _build
+
+      - name: Run tests
+        run: |
+          meson test -v -C _build
 
   msys2:
     runs-on: windows-latest
