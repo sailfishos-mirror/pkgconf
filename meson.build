@@ -35,6 +35,7 @@ else
   add_project_arguments(
     '-Wall',
     '/wd4200',
+    '/wd4774',
     '/wd4820',
     '/wd4668',
     '/wd4996',
