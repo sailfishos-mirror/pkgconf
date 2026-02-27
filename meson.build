@@ -34,6 +34,7 @@ if cc.get_id() != 'msvc'
 else
   add_project_arguments(
     '-Wall',
+    '/wd4130',
     '/wd4200',
     '/wd4774',
     '/wd4820',
