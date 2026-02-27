@@ -36,11 +36,11 @@ pkgconf_fgetline(pkgconf_buffer_t *buffer, FILE *stream)
 				do {
 					c = getc(stream);
 				} while (c != '\n' && c != EOF);
-				pkgconf_buffer_push_byte(buffer, c);
+				pkgconf_buffer_push_byte(buffer, (char) c);
 				break;
 			}
 			else
-				pkgconf_buffer_push_byte(buffer, c);
+				pkgconf_buffer_push_byte(buffer, (char) c);
 
 			quoted = false;
 			continue;
@@ -61,7 +61,7 @@ pkgconf_fgetline(pkgconf_buffer_t *buffer, FILE *stream)
 			}
 			else
 			{
-				pkgconf_buffer_push_byte(buffer, c);
+				pkgconf_buffer_push_byte(buffer, (char) c);
 			}
 
 			break;
@@ -97,7 +97,7 @@ pkgconf_fgetline(pkgconf_buffer_t *buffer, FILE *stream)
 				pkgconf_buffer_push_byte(buffer, '\\');
 				quoted = false;
 			}
-			pkgconf_buffer_push_byte(buffer, c);
+			pkgconf_buffer_push_byte(buffer, (char) c);
 		}
 
 	}

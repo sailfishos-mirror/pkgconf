@@ -481,7 +481,7 @@ maybe_add_module_definitions(pkgconf_client_t *client, pkgconf_pkg_t *world, pkg
 					break;
 
 				default:
-					*p = toupper((unsigned char) *p);
+					*p = (char) toupper((unsigned char) *p);
 			}
 		}
 
@@ -528,7 +528,7 @@ apply_env_variables(pkgconf_client_t *client, pkgconf_pkg_t *world, const char *
 						break;
 
 					default:
-						*p = toupper((unsigned char) *p);
+						*p = (char) toupper((unsigned char) *p);
 				}
 			}
 
@@ -1194,7 +1194,7 @@ pkgconf_cli_run(pkgconf_cli_state_t *state, int argc, char *argv[], int last_arg
 	if (state->required_module_version != NULL || state->required_exact_module_version != NULL || state->required_max_module_version != NULL)
 	{
 		const char *target_version = NULL;
-		pkgconf_pkg_comparator_t compare;
+		pkgconf_pkg_comparator_t compare = PKGCONF_CMP_ANY;
 
 		if (state->required_module_version != NULL)
 		{

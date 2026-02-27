@@ -387,7 +387,7 @@ lookup_val_from_env(const pkgconf_client_t *client, const char *pkg_id, const ch
 
 	for (c = env_var; *c; c++)
 	{
-		*c = toupper((unsigned char) *c);
+		*c = (char) toupper((unsigned char) *c);
 
 		if (!isalnum((unsigned char) *c))
 			*c = '_';
@@ -1095,7 +1095,7 @@ pkgconf_compare_version(const char *a, const char *b)
 
 		if (isnum)
 		{
-			int onelen, twolen;
+			size_t onelen, twolen;
 
 			while (*one == '0')
 				one++;

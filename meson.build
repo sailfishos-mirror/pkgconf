@@ -7,29 +7,44 @@ project('pkgconf', 'c',
 
 cc = meson.get_compiler('c')
 
-add_project_arguments(
-  '-D_BSD_SOURCE',
-  '-D_DARWIN_C_SOURCE',
-  '-D_DEFAULT_SOURCE',
-  '-D_POSIX_C_SOURCE=200809L',
-  cc.get_supported_arguments(
+if cc.get_id() != 'msvc'
+  add_project_arguments(
+    '-D_BSD_SOURCE',
+    '-D_DARWIN_C_SOURCE',
+    '-D_DEFAULT_SOURCE',
+    '-D_POSIX_C_SOURCE=200809L',
+    cc.get_supported_arguments(
+      '-Wall',
+      '-Wcast-align',
+      '-Wdate-time',
+      '-Wextra',
+      '-Wformat=2',
+      '-Wimplicit-function-declaration',
+      '-Wmisleading-indentation',
+      '-Wmissing-prototypes',
+      '-Wmissing-variable-declarations',
+      '-Wnested-externs',
+      '-Wold-style-definition',
+      '-Wpointer-arith',
+      '-Wshadow',
+      '-Wstrict-prototypes',
+    ),
+    language : 'c',
+  )
+else
+  add_project_arguments(
     '-Wall',
-    '-Wcast-align',
-    '-Wdate-time',
-    '-Wextra',
-    '-Wformat=2',
-    '-Wimplicit-function-declaration',
-    '-Wmisleading-indentation',
-    '-Wmissing-prototypes',
-    '-Wmissing-variable-declarations',
-    '-Wnested-externs',
-    '-Wold-style-definition',
-    '-Wpointer-arith',
-    '-Wshadow',
-    '-Wstrict-prototypes',
-  ),
-  language : 'c',
-)
+    '/wd4130',
+    '/wd4200',
+    '/wd4774',
+    '/wd4820',
+    '/wd4668',
+    '/wd4996',
+    '/wd5045',
+    '/D_CRT_SECURE_NO_WARNINGS',
+    language : 'c',
+  )
+endif
 
 cdata = configuration_data()
 
