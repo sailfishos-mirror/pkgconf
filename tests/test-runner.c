@@ -26,7 +26,7 @@
 # define PKGCONF_TEST_PLATFORM "windows"
 #endif
 
-static char *test_fixtures_dir = NULL;
+static pkgconf_buffer_t test_fixtures_dir = PKGCONF_BUFFER_INITIALIZER;
 static bool debug = false;
 
 typedef enum test_match_strategy_ {
@@ -219,7 +219,7 @@ handle_substs(pkgconf_buffer_t *dest, const pkgconf_buffer_t *src)
 		const char *key;
 		const char *value;
 	} subst_pairs[] = {
-		{"%TEST_FIXTURES_DIR%", test_fixtures_dir},
+		{"%TEST_FIXTURES_DIR%", pkgconf_buffer_str(&test_fixtures_dir)},
 		{"%DIR_SEP%", PKG_CONFIG_PATH_SEP_S},
 	};
 
@@ -422,7 +422,7 @@ test_keyword_set_path_list(pkgconf_test_case_t *testcase, const char *keyword, c
 	(void) warnprefix;
 
 	pkgconf_list_t *dest = (pkgconf_list_t *)((char *) testcase + offset);
-	prefixed_path_split(value, dest, test_fixtures_dir);
+	prefixed_path_split(value, dest, pkgconf_buffer_str(&test_fixtures_dir));
 }
 
 static void
@@ -918,6 +918,7 @@ int
 main(int argc, char *argv[])
 {
 	int ret;
+	char *test_fixtures_dir_arg = NULL;
 
 	struct pkg_option options[] = {
 		{"test-fixtures", required_argument, NULL, 1},
@@ -932,7 +933,7 @@ main(int argc, char *argv[])
 		switch (ret)
 		{
 		case 1:
-			test_fixtures_dir = pkg_optarg;
+			test_fixtures_dir_arg = pkg_optarg;
 			break;
 		case 2:
 			debug = true;
@@ -943,8 +944,14 @@ main(int argc, char *argv[])
 		}
 	}
 
-	if (test_fixtures_dir == NULL)
+	if (test_fixtures_dir_arg == NULL)
 		usage();
+
+	{
+		const pkgconf_buffer_t *test_fixtures_dir_arg_buf = PKGCONF_BUFFER_FROM_STR(test_fixtures_dir_arg);
+
+		pkgconf_buffer_subst(&test_fixtures_dir, test_fixtures_dir_arg_buf, "\\", "/");
+	}
 
 	if (testcase != NULL)
 		return process_test_case(testcase) ? EXIT_SUCCESS : EXIT_FAILURE;
