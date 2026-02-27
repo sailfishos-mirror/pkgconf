@@ -525,9 +525,7 @@ load_test_case(char *testfile)
 		goto cleanup;
 
 	char *nameptr;
-	if ((nameptr = strrchr(testfile, PKG_DIR_SEP_S)) != NULL)
-		nameptr++;
-	else if ((nameptr = strrchr(testfile, '/')) != NULL)
+	if ((nameptr = strrchr(testfile, '/')) != NULL)
 		nameptr++;
 	else
 		nameptr = testfile;
