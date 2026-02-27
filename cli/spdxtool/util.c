@@ -245,7 +245,7 @@ spdxtool_util_string_correction(char *str)
 	/* Lowecase string  and make spaces '_' */
 	for ( ; *ptr; ++ptr)
 	{
-		*ptr = tolower(*ptr);
+		*ptr = (char) tolower(*ptr);
 		if(isspace((unsigned char) *ptr))
 		{
 			*ptr = '_';
