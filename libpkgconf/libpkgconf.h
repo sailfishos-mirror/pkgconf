@@ -115,7 +115,6 @@ enum pkgconf_bytecode_op {
 	PKGCONF_BYTECODE_OP_TEXT = 1,
 	PKGCONF_BYTECODE_OP_VAR = 2,
 	PKGCONF_BYTECODE_OP_SYSROOT = 3,
-	PKGCONF_BYTECODE_OP_PREFIX = 4,
 };
 
 typedef struct {
