@@ -34,14 +34,26 @@
 # include <io.h>     /* for _setmode() */
 # include <fcntl.h>
 # define PATH_DEV_NULL	"nul"
-# ifdef _WIN64
-#  ifndef __MINGW32__
-#   define SIZE_FMT_SPECIFIER	"%I64u"
+# ifdef _MSC_VER
+#  if _MSC_VER >= 1900
+#   define SIZE_FMT_SPECIFIER "%zu"
 #  else
-#   define SIZE_FMT_SPECIFIER	"%llu"
+#   ifdef _WIN64
+#    define SIZE_FMT_SPECIFIER "%I64u"
+#   else
+#    define SIZE_FMT_SPECIFIER "%u"
+#   endif
 #  endif
 # else
-#  define SIZE_FMT_SPECIFIER	"%u"
+#  ifdef _WIN64
+#   ifndef __MINGW32__
+#    define SIZE_FMT_SPECIFIER	"%I64u"
+#   else
+#    define SIZE_FMT_SPECIFIER	"%llu"
+#   endif
+#  else
+#   define SIZE_FMT_SPECIFIER	"%u"
+#  endif
 # endif
 # ifndef ssize_t
 # ifndef __MINGW32__
