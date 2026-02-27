@@ -481,7 +481,7 @@ maybe_add_module_definitions(pkgconf_client_t *client, pkgconf_pkg_t *world, pkg
 					break;
 
 				default:
-					*p = toupper((unsigned char) *p);
+					*p = (char) toupper((unsigned char) *p);
 			}
 		}
 
@@ -528,7 +528,7 @@ apply_env_variables(pkgconf_client_t *client, pkgconf_pkg_t *world, const char *
 						break;
 
 					default:
-						*p = toupper((unsigned char) *p);
+						*p = (char) toupper((unsigned char) *p);
 				}
 			}
 
