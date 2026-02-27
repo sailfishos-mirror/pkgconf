@@ -116,18 +116,6 @@ pkgconf_fragment_is_unmergeable(const char *string)
 }
 
 static inline bool
-pkgconf_fragment_should_munge(const char *string, const char *sysroot_dir)
-{
-	if (*string != '/')
-		return false;
-
-	if (sysroot_dir != NULL && strncmp(sysroot_dir, string, strlen(sysroot_dir)))
-		return true;
-
-	return false;
-}
-
-static inline bool
 pkgconf_fragment_is_groupable(const char *string)
 {
 	static const struct pkgconf_fragment_check check_fragments[] = {
