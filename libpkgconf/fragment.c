@@ -116,18 +116,6 @@ pkgconf_fragment_is_unmergeable(const char *string)
 }
 
 static inline bool
-pkgconf_fragment_should_munge(const char *string, const char *sysroot_dir)
-{
-	if (*string != '/')
-		return false;
-
-	if (sysroot_dir != NULL && strncmp(sysroot_dir, string, strlen(sysroot_dir)))
-		return true;
-
-	return false;
-}
-
-static inline bool
 pkgconf_fragment_is_groupable(const char *string)
 {
 	static const struct pkgconf_fragment_check check_fragments[] = {
@@ -229,7 +217,8 @@ should_inject_sysroot(const pkgconf_client_t *client, const char *string, bool s
 	if (!pkgconf_fragment_should_check_sysroot(string))
 		return false;
 
-	if (!strncmp(string + 2, client->sysroot_dir, strlen(client->sysroot_dir)))
+	if (!strncmp(string + 2, client->sysroot_dir, strlen(client->sysroot_dir)) &&
+            *(string + 2 + strlen(client->sysroot_dir)) == '/')
 		return false;
 
 	return true;
@@ -262,7 +251,8 @@ should_inject_sysroot_child(const pkgconf_client_t *client, const pkgconf_fragme
 	if (!pkgconf_fragment_should_check_sysroot(last->data))
 		return false;
 
-	if (!strncmp(string, client->sysroot_dir, strlen(client->sysroot_dir)))
+	if (!strncmp(string, client->sysroot_dir, strlen(client->sysroot_dir)) &&
+            *(string + 1 + strlen(client->sysroot_dir)) == '/')
 		return false;
 
 	return true;

@@ -287,6 +287,12 @@ pkgconf_client_get_sysroot_dir(const pkgconf_client_t *client)
 void
 pkgconf_client_set_sysroot_dir(pkgconf_client_t *client, const char *sysroot_dir)
 {
+	if (sysroot_dir != NULL && (!strcmp(sysroot_dir, "/") || !strcmp(sysroot_dir, ".")))
+	{
+		pkgconf_warn(client, "ignoring bogus sysroot_dir: %s", sysroot_dir);
+		sysroot_dir = NULL;
+	}
+
 	if (client->sysroot_dir != NULL)
 		free(client->sysroot_dir);
 
