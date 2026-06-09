@@ -1348,7 +1348,12 @@ run_test_case(const pkgconf_test_case_t *testcase)
 		else
 		{
 			if (pkgconf_buffer_len(&file_contents))
+			{
 				pkgconf_buffer_trim_byte(&file_contents);
+#ifdef __CYGWIN__
+				pkgconf_buffer_trim_byte(&file_contents);
+#endif
+			}
 
 			if (!test_match_buffer(testcase->match_stdout, &file_contents, &out->o_stdout, "stdout (file)"))
 				passed = false;
